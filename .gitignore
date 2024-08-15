@@ -39,3 +39,6 @@ next-env.d.ts
 #aider
 /aider.tags.cache.v3
 .aider*
+
+#commandes
+cmd.md

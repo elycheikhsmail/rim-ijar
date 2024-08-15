@@ -1,0 +1,17 @@
+# Use the official Verdaccio image as a base
+FROM verdaccio/verdaccio:5
+
+# Set the working directory
+WORKDIR /verdaccio
+
+# Copy the Verdaccio configuration file (if you have a custom one)
+# COPY config.yaml /verdaccio/conf/config.yaml
+
+# Create a volume for persistent storage
+VOLUME ["/verdaccio/storage"]
+
+# Expose the default Verdaccio port
+EXPOSE 4873
+
+# Start Verdaccio
+CMD ["verdaccio", "--config", "/verdaccio/conf/config.yaml"]

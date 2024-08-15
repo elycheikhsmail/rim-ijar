@@ -4,9 +4,9 @@ import { defineConfig } from "kysely-ctl";
 //import "@/loadEnv"; // Assurez-vous de charger les variables d'environnement
 
 import { z } from "zod";
-import "../loadEnv"; // Assurez-vous de charger les variables d'environnement
+//import "../loadEnv"; // Assurez-vous de charger les variables d'environnement
 
-const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
+//const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
 // document and valiate env variable types
 // document and valiate env variable types
 const envSchema = z.object({

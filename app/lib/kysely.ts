@@ -2,7 +2,7 @@ import { DatabaseInterfaces } from "./db/index"; // this is the Database interfa
 import { Pool } from "pg";
 import { Kysely, PostgresDialect } from "kysely";
 import { z } from "zod";
-import "@/loadEnv"; // Assurez-vous de charger les variables d'environnement
+//import "@/loadEnv"; // Assurez-vous de charger les variables d'environnement
 
 // document and valiate env variable types
 const envSchema = z.object({

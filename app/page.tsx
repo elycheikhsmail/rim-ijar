@@ -1,5 +1,4 @@
-import { Suspense } from "react";
-import ListAnnoncesUI from "./ui/ListAnnoncesUI";
+ import ListAnnoncesUI from "./ui/ListAnnoncesUI";
 
 import { db } from "@/app/lib/kysely";
 
@@ -25,19 +24,14 @@ export default async function Home(
       "annonces.lieu_str as lieu_str",
       "annonces.created_at as created_at",
     ]).execute();
-
-  //.select(["id",""])
   const currentPage = Number(searchParams?.page) || 1;
-
   return (
     <main className="min-h-screen">
       <div className="p-8">
         <h1 className="text-3xl font-bold mb-8 text-center">
           Annonces de biens à louer
         </h1>
-        <Suspense>
           <ListAnnoncesUI currentPage={currentPage} annonces={annonces} />
-        </Suspense>
       </div>
     </main>
   );

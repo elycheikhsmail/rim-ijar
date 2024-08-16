@@ -1,6 +1,5 @@
 import React from "react";
-import Image from "next/image";
-//import { Annonce } from "../types";
+import Image from "next/image"; 
 import { AnnonceUI } from "@/app/lib/db/types";
 
 const fallbackImageUrl = "/images/placeholder.jpg";

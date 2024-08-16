@@ -1,8 +1,8 @@
 import Link from "next/link"; 
 import { AnnonceUI } from "@/app/lib/db/types";
 
-import AnnonceItemUI from "./AnnonceItemUI";
-import PaginationUI from "./PaginationUI";
+import AnnonceItemUI from "@/app/ui/AnnonceItemUI";
+import PaginationUI from "@/app/ui/PaginationUI";
 
 export default function ListAnnoncesUI(
   { currentPage, annonces }: { currentPage: number; annonces: AnnonceUI[] },

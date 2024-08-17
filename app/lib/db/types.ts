@@ -11,6 +11,7 @@ export interface DatabaseInterfaces {
   sessions: SessionsTable;
   categories: CategoriesTable;
   annonces: AnnoncesTable;
+  images: ImagesTable;
 }
 
 interface UsersTable {
@@ -18,6 +19,9 @@ interface UsersTable {
   email: string;
   password: string | null;
   created_at: ColumnType<Date, string | undefined, never>;
+  updated_at: ColumnType<Date, string | undefined, never>;
+  name: string;
+  phone: string | null;
 }
 
 interface SessionsTable {
@@ -40,9 +44,10 @@ interface AnnoncesTable {
   user_id: number;
   description: string;
   lieu_str: string;
-  image_url: string;
   price: number;
   created_at: ColumnType<Date, string | undefined, never>;
+  updated_at: ColumnType<Date, string | undefined, never>;
+  title: string;
 }
 
 interface AnnoncesVirtualUiTable {
@@ -71,4 +76,15 @@ export type CategoryUpdate = Updateable<CategoriesTable>;
 export type AnnonceUI = Selectable<AnnoncesVirtualUiTable>;
 export type Annonce = Selectable<AnnoncesTable>;
 export type NewAnnonce = Insertable<AnnoncesTable>;
+
+interface ImagesTable {
+  id: Generated<number>;
+  annonce_id: number;
+  url: string;
+  created_at: ColumnType<Date, string | undefined, never>;
+  updated_at: ColumnType<Date, string | undefined, never>;
+}
+
+export type Image = Selectable<ImagesTable>;
+export type NewImage = Insertable<ImagesTable>;
 export type AnnonceUpdate = Updateable<AnnoncesTable>;

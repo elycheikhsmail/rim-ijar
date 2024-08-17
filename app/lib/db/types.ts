@@ -12,6 +12,7 @@ export interface DatabaseInterfaces {
   categories: CategoriesTable;
   annonces: AnnoncesTable;
   images: ImagesTable;
+  likes: LikesTable;
 }
 
 interface UsersTable {
@@ -22,6 +23,7 @@ interface UsersTable {
   updated_at: ColumnType<Date, string | undefined, never>;
   name: string;
   phone: string | null;
+  avatar_url: string | null;
 }
 
 interface SessionsTable {
@@ -87,4 +89,14 @@ interface ImagesTable {
 
 export type Image = Selectable<ImagesTable>;
 export type NewImage = Insertable<ImagesTable>;
+
+interface LikesTable {
+  id: Generated<number>;
+  user_id: number;
+  annonce_id: number;
+  created_at: ColumnType<Date, string | undefined, never>;
+}
+
+export type Like = Selectable<LikesTable>;
+export type NewLike = Insertable<LikesTable>;
 export type AnnonceUpdate = Updateable<AnnoncesTable>;

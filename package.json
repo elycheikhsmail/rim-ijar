@@ -7,20 +7,28 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "set-db-url": "export DATABASE_URL=postgresql://testuser:testpassword@localhost:5432/testdb && echo $DATABASE_URL",
     "migrate:up": "npx kysely migrate:up",
     "migrate:down": "npx kysely migrate:down",
-    "seed:run": "npx kysely seed:run"
+    "seed:run": "npx kysely seed:run",
+    "prune-containers": "docker container prune -f",
+    "start-postgres-container": "docker run --name my-postgres-container -p 5432:5432 my-postgres-test-db",
+    "start:db": "npm run prune-containers && npm run start-postgres-container",
+    "e2e": "export DATABASE_URL=postgresql://testuser:testpassword@localhost:5432/testdb  && npx kysely migrate:up && cypress open",
+    "e2e:v2": "npx kysely migrate:up && cypress open",
+    "e2e:run": "npx kysely migrate:up && cypress run --spec 'cypress/e2e/3-my-test/all.cy.js'"
   },
-  "dependencies": {
+  "dependencies": { 
     "@types/bcrypt": "^5.0.2",
     "@types/pg": "^8.11.6",
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.0.1",
     "@typescript-eslint/parser": "^8.0.1",
     "bcrypt": "^5.1.1",
+    "cypress": "^13.13.3",
     "dotenv": "^16.4.5",
     "kysely": "^0.27.4",
-    "kysely-ctl": "^0.9.0",
+    "kysely-ctl": "^0.9.0", 
     "kysely-postgres-js": "^2.0.0",
     "next": "14.2.5",
     "pg": "^8.12.0",
@@ -40,6 +48,5 @@
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5"
-  },
-  "packageManager": "pnpm@9.7.0+sha512.dc09430156b427f5ecfc79888899e1c39d2d690f004be70e05230b72cb173d96839587545d09429b55ac3c429c801b4dc3c0e002f653830a420fa2dd4e3cf9cf"
+  }
 }

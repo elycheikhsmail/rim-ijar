@@ -55,11 +55,14 @@ export default async function addAnnonceAction(formData: FormData) {
     await db.insertInto("annonces").values(
       {
         categorie_id,
+        sub_categorie_id:1,
         user_id,
         description,
         lieu_str,
         image_url,
         price,
+        options_object: JSON.stringify([])
+       
       },
     ).execute();
 

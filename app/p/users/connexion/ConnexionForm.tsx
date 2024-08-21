@@ -14,8 +14,8 @@ export default function ConnexionForm(
 ) {
   const router = useRouter();
   //
-  const [email, setEmail] = useState("ely@gmail.com");
-  const [password, setPassword] = useState("1234er");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [submitStatus, setSubmitStatus] = useState("");
 

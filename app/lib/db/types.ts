@@ -1,102 +1,116 @@
 import {
-  ColumnType,
-  Generated,
-  Insertable,
-  Selectable,
-  Updateable,
-} from "kysely";
+    ColumnType,
+    Generated,
+    Insertable,
+    JSONColumnType,
+    Selectable,
+    Updateable,
+} from 'kysely';
 
-export interface DatabaseInterfaces {
-  users: UsersTable;
-  sessions: SessionsTable;
-  categories: CategoriesTable;
-  annonces: AnnoncesTable;
-  images: ImagesTable;
-  likes: LikesTable;
+export interface Database {
+    users: UserTable;
+    sessions: SessionTable;
+    categories: CategoryTable;
+    sub_categories: SubCategoryTable;
+    annonces: AnnonceTable;
 }
 
-interface UsersTable {
-  id: Generated<number>;
-  email: string;
-  password: string | null;
-  created_at: ColumnType<Date, string | undefined, never>;
-  updated_at: ColumnType<Date, string | undefined, never>;
-  name: string;
-  phone: string | null;
-  avatar_url: string | null;
+// Description des tables pour Kysely
+export interface UserTable {
+    id: Generated<number>;
+    email: string;
+    password: string;
+    created_at: ColumnType<Date, string | undefined, never>;
 }
 
-interface SessionsTable {
-  id: Generated<number>;
-  user_id: number;
-  token:string;
-  is_exp: boolean | null;
-  created_at: ColumnType<Date, string | undefined, never>;
+export type User = Selectable<UserTable>;
+export type NewUser = Insertable<UserTable>;
+export type UserUpdate = Updateable<UserTable>;
+
+export interface SessionTable {
+    id: Generated<number>;
+    user_id: number;
+    token: string;
+    is_exp: boolean;
+    created_at: ColumnType<Date, string | undefined, never>;
 }
 
-interface CategoriesTable {
-  id: Generated<number>;
-  name: string;
-  created_at: ColumnType<Date, string | undefined, never>;
+export type Session = Selectable<SessionTable>;
+export type NewSession = Insertable<SessionTable>;
+export type SessionUpdate = Updateable<SessionTable>;
+
+export interface CategoryTable {
+    id: Generated<number>;
+    name: string;
+    is_vente: boolean;
+    is_location: boolean;
+    is_service: boolean;
+    created_at: ColumnType<Date, string | undefined, never>;
 }
 
-interface AnnoncesTable {
-  id: Generated<number>;
-  categorie_id: number;
-  user_id: number;
-  description: string;
-  lieu_str: string;
-  price: number;
-  created_at: ColumnType<Date, string | undefined, never>;
-  updated_at: ColumnType<Date, string | undefined, never>;
-  title: string;
+export type Category = Selectable<CategoryTable>;
+export type NewCategory = Insertable<CategoryTable>;
+export type CategoryUpdate = Updateable<CategoryTable>;
+
+export interface SubCategoryTable {
+    id: Generated<number>;
+    name: string;
+    categorie_id:number;
+    created_at: ColumnType<Date, string | undefined, never>;
+}
+
+export type SubCategory = Selectable<SubCategoryTable>;
+export type NewSubCategory = Insertable<SubCategoryTable>;
+export type SubCategoryUpdate = Updateable<SubCategoryTable>;
+
+export interface AnnonceTable {
+    id: Generated<number>;
+    categorie_id: number;
+    sub_categorie_id: number;
+    options_object?: JSONColumnType<Record<string, any>>; // Ajustez selon la structure JSON spécifique
+    user_id: number;
+    description: string;
+    price: number;
+    lieu_str: string;
+    lieu_object?: JSONColumnType<Record<string, any>>;
+    //JSONColumnType<Record<string, any[]>>; // Ajustez selon la structure JSON spécifique
+    // JSONColumnType<Record<string, any>[]>;
+    image_url: string;
+    image_object?: string;
+    created_at: ColumnType<Date, string | undefined, never>;
 }
 
 interface AnnoncesVirtualUiTable {
-  id: Generated<number>;
-  categorie: string;
-  user_id: number;
-  description: string;
-  lieu_str: string;
-  image_url: string;
-  price: number;
-  created_at: ColumnType<Date, string | undefined, never>;
+    id: Generated<number>;
+    categorie: string;
+    user_id: number;
+    description: string;
+    lieu_str: string;
+    image_url: string;
+    price: number; 
+    created_at: ColumnType<Date, string | undefined, never>;
 }
 
-export type User = Selectable<UsersTable>;
-export type NewUser = Insertable<UsersTable>;
-export type UserUpdate = Updateable<UsersTable>;
+interface AnnoncesVirtualUiDetailsTable {
+    id: Generated<number>;
+    categorie: string;
+    user_id: number;
+    categorie_id: number;
+    sub_categorie_id: number;
+  
+    description: string;
+    options_object?: JSONColumnType<Record<string, any>>; // Ajustez selon la structure JSON spécifique
+    lieu_str: string;
+    image_url: string;
+    price: number; 
+    created_at: ColumnType<Date, string | undefined, never>;
 
-export type Session = Selectable<SessionsTable>;
-export type NewSession = Insertable<SessionsTable>;
-export type SessionUpdate = Updateable<SessionsTable>;
+}
 
-export type Category = Selectable<CategoriesTable>;
-export type NewCategory = Insertable<CategoriesTable>;
-export type CategoryUpdate = Updateable<CategoriesTable>;
 
 export type AnnonceUI = Selectable<AnnoncesVirtualUiTable>;
-export type Annonce = Selectable<AnnoncesTable>;
-export type NewAnnonce = Insertable<AnnoncesTable>;
+export type AnnonceDetailsUI = Selectable<AnnoncesVirtualUiDetailsTable>;
 
-interface ImagesTable {
-  id: Generated<number>;
-  annonce_id: number;
-  url: string;
-  created_at: ColumnType<Date, string | undefined, never>;
-  updated_at: ColumnType<Date, string | undefined, never>;
-}
-
-export type Image = Selectable<ImagesTable>;
-export type NewImage = Insertable<ImagesTable>;
-
-interface LikesTable {
-  id: Generated<number>;
-  user_id: number;
-  annonce_id: number;
-  created_at: ColumnType<Date, string | undefined, never>;
-}
-
-export type Like = Selectable<LikesTable>;
-export type NewLike = Insertable<LikesTable>;
-export type AnnonceUpdate = Updateable<AnnoncesTable>;
+export type Annonce = Selectable<AnnonceTable>;
+export type NewAnnonce = Insertable<AnnonceTable>;
+export type AnnonceUpdate = Updateable<AnnonceTable>;

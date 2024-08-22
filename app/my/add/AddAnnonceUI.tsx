@@ -96,12 +96,12 @@ export default function AddAnnonceUI(
   };
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-gray-100">
       <div className="container mx-auto p-8">
-        <h1 className="text-5xl font-bold mb-4 text-center text-gray-800">
+        <h1 className="text-4xl font-bold mb-4 text-center text-gray-800">
           Bienvenue, Sidi !
         </h1>
-        <h2 className="text-3xl font-semibold mb-4 text-center text-gray-700">
+        <h2 className="text-2xl font-semibold mb-4 text-center text-gray-700">
           Ajouter une annonce
         </h2>
         <p className="text-center mb-8 text-gray-600 italic">
@@ -115,7 +115,7 @@ export default function AddAnnonceUI(
         >
 
           <div className="mb-6 relative">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Type d'annonce:</label>
+            <label htmlFor="annonceType" className="block text-gray-700 text-sm font-bold mb-2">Type d'annonce:</label>
             <select 
               value={selectedType} 
               onChange={handleTypeChange}
@@ -213,7 +213,7 @@ export default function AddAnnonceUI(
             >
               Ajouter l'annonce
             </button>
-            {submitStatus && <p>{submitStatus}</p>}
+            {submitStatus && <p className="mt-4 text-center text-sm text-gray-600">{submitStatus}</p>}
           </div>
         </form>
       </div>

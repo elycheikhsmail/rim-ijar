@@ -132,8 +132,6 @@ function AddAnnonceUI(
           </div>
 
           <div className="flex items-center justify-center">
-
-          <div className="flex items-center justify-center">
             <button
               type="submit"
               id="submit"
@@ -150,8 +148,8 @@ function AddAnnonceUI(
                 "Ajouter l'annonce"
               )}
             </button>
-            {submitStatus && <p className="mt-4 text-center text-sm text-gray-600">{submitStatus}</p>}
           </div>
+          {submitStatus && <p className="mt-4 text-center text-sm text-gray-600">{submitStatus}</p>}
         </form>
       </div>
     </main>

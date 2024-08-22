@@ -114,9 +114,13 @@ export default function AddAnnonceUI(
           className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-8"
         >
 
-          <div>
-            <label>Type d'annonce:</label>
-            <select value={selectedType} onChange={handleTypeChange}>
+          <div className="mb-6 relative">
+            <label className="block text-gray-700 text-sm font-bold mb-2">Type d'annonce:</label>
+            <select 
+              value={selectedType} 
+              onChange={handleTypeChange}
+              className="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all duration-300"
+            >
               <option value="">Sélectionnez un type</option>
               <option value={AnnonceType.Location}>Location</option>
               <option value={AnnonceType.Vente}>Vente</option>
@@ -125,9 +129,14 @@ export default function AddAnnonceUI(
             </select>
           </div>
 
-          <div>
-            <label>Catégorie:</label>
-            <select value={selectedCategory} onChange={handleCategoryChange} disabled={!selectedType}>
+          <div className="mb-6 relative">
+            <label className="block text-gray-700 text-sm font-bold mb-2">Catégorie:</label>
+            <select 
+              value={selectedCategory} 
+              onChange={handleCategoryChange} 
+              disabled={!selectedType}
+              className="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all duration-300"
+            >
               <option value="">Sélectionnez une catégorie</option>
               {filteredCategories.map(category => (
                 <option key={category.id} value={category.name}>{category.name}</option>
@@ -135,9 +144,13 @@ export default function AddAnnonceUI(
             </select>
           </div>
 
-          <div>
-            <label>Sous-catégorie:</label>
-            <select value={selectedCategory} disabled={!selectedCategory}>
+          <div className="mb-6 relative">
+            <label className="block text-gray-700 text-sm font-bold mb-2">Sous-catégorie:</label>
+            <select 
+              value={selectedCategory} 
+              disabled={!selectedCategory}
+              className="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all duration-300"
+            >
               <option value="">Sélectionnez une sous-catégorie</option>
               {filteredSubCategories.map(subCategory => (
                 <option key={subCategory.id} value={subCategory.name}>{subCategory.name}</option>

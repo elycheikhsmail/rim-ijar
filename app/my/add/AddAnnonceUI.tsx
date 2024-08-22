@@ -120,6 +120,8 @@ function AddAnnonceUI(
         >
           {/* ... (rest of the form fields remain unchanged) ... */}
 
+          {/* ... (rest of the form fields remain unchanged) ... */}
+
           <div className="mb-6 relative">
             <label htmlFor="location" className="block text-gray-700 text-sm font-bold mb-2">
               Emplacement
@@ -128,6 +130,8 @@ function AddAnnonceUI(
               <MapWithNoSSR selectedLocation={selectedLocation} setSelectedLocation={setSelectedLocation} />
             </div>
           </div>
+
+          <div className="flex items-center justify-center">
 
           <div className="flex items-center justify-center">
             <button

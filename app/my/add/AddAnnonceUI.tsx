@@ -8,7 +8,16 @@ type AddAnnonceActionType = (
   formData: FormData,
 ) => Promise<{ success?: boolean; message?: string; error?: string }>;
 
-export default function AddAnnonceUI(
+import React, { useState } from "react";
+import { Category, AnnonceType, SubCategory, categories, subCategories } from './data';
+import { useRouter } from "next/navigation";
+import ClipLoader from "react-spinners/ClipLoader";
+
+type AddAnnonceActionType = (
+  formData: FormData,
+) => Promise<{ success?: boolean; message?: string; error?: string }>;
+
+function AddAnnonceUI(
   { addAnnonceAction }: { addAnnonceAction: AddAnnonceActionType }
 ) {
   const router = useRouter();
@@ -115,7 +124,6 @@ export default function AddAnnonceUI(
   );
 }
 
-// Add this CSS at the end of the file or in a separate CSS file
 const styles = `
   @keyframes fadeIn {
     0% {
@@ -131,11 +139,11 @@ const styles = `
   }
 `;
 
-export default function AddAnnonceUIWithStyles() {
+export default function AddAnnonceUIWithStyles({ addAnnonceAction }: { addAnnonceAction: AddAnnonceActionType }) {
   return (
     <>
       <style jsx>{styles}</style>
-      <AddAnnonceUI addAnnonceAction={/* your addAnnonceAction function */} />
+      <AddAnnonceUI addAnnonceAction={addAnnonceAction} />
     </>
   );
 }

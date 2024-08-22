@@ -48,12 +48,25 @@ function AddAnnonceUI(
     }
   };
 
+  const LocationPicker = () => {
+    const map = useMapEvents({
+      click: (e) => {
+        setSelectedLocation({ lat: e.latlng.lat, lng: e.latlng.lng });
+      },
+    });
+
+    return selectedLocation ? (
+      <Marker position={[selectedLocation.lat, selectedLocation.lng]}>
+      </Marker>
+    ) : null;
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     const categorie_id = 1;
-    console.log({ description, price, categorie, categorie_id });
+    console.log({ description, price, categorie, categorie_id, selectedLocation });
 
     const formData = new FormData();
     formData.set("description", description);
@@ -61,6 +74,10 @@ function AddAnnonceUI(
     formData.set("categorie_id", `${categorie_id}`);
     formData.set("lieu_str", "noukachott");
     formData.set("image_url", "/images/maison.jpeg");
+    if (selectedLocation) {
+      formData.set("latitude", `${selectedLocation.lat}`);
+      formData.set("longitude", `${selectedLocation.lng}`);
+    }
 
     try {
       const result = await addAnnonceAction(formData);
@@ -98,6 +115,26 @@ function AddAnnonceUI(
           className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-8"
         >
           {/* ... (rest of the form fields remain unchanged) ... */}
+
+          <div className="mb-6 relative">
+            <label htmlFor="location" className="block text-gray-700 text-sm font-bold mb-2">
+              Emplacement
+            </label>
+            <div className="h-64">
+              <MapContainer
+                center={[18.0742, -15.9619]}
+                zoom={13}
+                scrollWheelZoom={false}
+                className="h-full"
+              >
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <LocationPicker />
+              </MapContainer>
+            </div>
+          </div>
 
           <div className="flex items-center justify-center">
             <button

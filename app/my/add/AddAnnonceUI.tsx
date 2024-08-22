@@ -3,9 +3,12 @@ import React, { useState } from "react";
 import { Category, AnnonceType, SubCategory, categories, subCategories } from './data';
 import { useRouter } from "next/navigation";
 import ClipLoader from "react-spinners/ClipLoader";
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-//import L from 'leaflet';
+import dynamic from 'next/dynamic';
+
+const MapWithNoSSR = dynamic(() => import('./MapComponent'), {
+  ssr: false,
+});
 
 type AddAnnonceActionType = (
   formData: FormData,
@@ -60,26 +63,7 @@ function AddAnnonceUI(
     }
   };
 
-  const LocationPicker = () => {
-    const map = useMapEvents({
-      click: (e) => {
-        setSelectedLocation({ lat: e.latlng.lat, lng: e.latlng.lng });
-      },
-    });
-
-    return selectedLocation ? (
-      <Marker 
-        position={[selectedLocation.lat, selectedLocation.lng]}
-        icon={L.icon({
-          iconUrl: '/images/marker-icon.png',
-          iconRetinaUrl: '/images/marker-icon-2x.png',
-          shadowUrl: '/images/marker-shadow.png',
-          iconSize: [25, 41],
-          iconAnchor: [12, 41],
-        })}
-      />
-    ) : null;
-  };
+  // LocationPicker component is now moved to MapComponent
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

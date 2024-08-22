@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 
-import { Category,AnnonceType,SubCategory,categories,subCategories } from './data';
+import { Category, AnnonceType, SubCategory, categories, subCategories } from './data';
 
 
 import { useRouter } from "next/navigation";
@@ -10,12 +10,12 @@ type AddAnnonceActionType = (
   formData: FormData,
 ) => Promise<{ success?: boolean; message?: string; error?: string }>;
 
- 
+
 
 export default function AddAnnonceUI(
   { addAnnonceAction }: { addAnnonceAction: AddAnnonceActionType }
 ) {
-  const router = useRouter(); 
+  const router = useRouter();
 
   const [selectedType, setSelectedType] = useState<AnnonceType | ''>('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -38,7 +38,7 @@ export default function AddAnnonceUI(
     }
   };
 
-  
+
 
   const [description, setDescription] = useState(
     "maison jolie contenant 4 chambres",
@@ -50,10 +50,10 @@ export default function AddAnnonceUI(
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
- 
-  const categorie_id =1
+
+    const categorie_id = 1
     // Ici, vous ajouteriez la logique pour envoyer les données à votre API
-    console.log({ description, price, categorie, categorie_id});
+    console.log({ description, price, categorie, categorie_id });
     /*    
   image_url: z.string(),
   price: z.number(), // then number
@@ -61,7 +61,7 @@ export default function AddAnnonceUI(
     const formData = new FormData();
     formData.set("description", description);
     formData.set("price", `${price}`);
-    formData.set("categorie_id", `${categorie_id}`); 
+    formData.set("categorie_id", `${categorie_id}`);
     formData.set("lieu_str", "noukachott");
     formData.set("image_url", "/images/maison.jpeg");
     // user_id sera recuper cote serveur
@@ -105,52 +105,52 @@ export default function AddAnnonceUI(
           onSubmit={handleSubmit}
           className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-8"
         >
-                <div className="mb-6 relative">
-        <label htmlFor="type" className="block text-gray-700 text-sm font-bold mb-2">Type d'annonce:</label>
-        <select 
-          id="type"
-          value={selectedType} 
-          onChange={handleTypeChange}
-          className="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all duration-300"
-        >
-          <option value="">Sélectionnez un type</option>
-          <option value={AnnonceType.Location}>Location</option>
-          <option value={AnnonceType.Vente}>Vente</option>
-          <option value={AnnonceType.Service}>Service</option>
-          <option value={AnnonceType.Autre}>Autre</option>
-        </select>
-      </div>
+          <div className="mb-6 relative">
+            <label htmlFor="type" className="block text-gray-700 text-sm font-bold mb-2">Type d'annonce:</label>
+            <select
+              id="type"
+              value={selectedType}
+              onChange={handleTypeChange}
+              className="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all duration-300"
+            >
+              <option value="">Sélectionnez un type</option>
+              <option value={AnnonceType.Location}>Location</option>
+              <option value={AnnonceType.Vente}>Vente</option>
+              <option value={AnnonceType.Service}>Service</option>
+              <option value={AnnonceType.Autre}>Autre</option>
+            </select>
+          </div>
 
-      <div className="mb-6 relative">
-        <label htmlFor="category" className="block text-gray-700 text-sm font-bold mb-2">Catégorie:</label>
-        <select 
-          id="category"
-          value={selectedCategory} 
-          onChange={handleCategoryChange} 
-          disabled={!selectedType}
-          className="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all duration-300"
-        >
-          <option value="">Sélectionnez une catégorie</option>
-          {filteredCategories.map(category => (
-            <option key={category.id} value={category.name}>{category.name}</option>
-          ))}
-        </select>
-      </div>
+          <div className="mb-6 relative">
+            <label htmlFor="category" className="block text-gray-700 text-sm font-bold mb-2">Catégorie:</label>
+            <select
+              id="category"
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+              disabled={!selectedType}
+              className="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all duration-300"
+            >
+              <option value="">Sélectionnez une catégorie</option>
+              {filteredCategories.map(category => (
+                <option key={category.id} value={category.name}>{category.name}</option>
+              ))}
+            </select>
+          </div>
 
-      <div className="mb-6 relative">
-        <label htmlFor="subCategory" className="block text-gray-700 text-sm font-bold mb-2">Sous-catégorie:</label>
-        <select 
-          id="subCategory"
-          value={selectedCategory} 
-          disabled={!selectedCategory}
-          className="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all duration-300"
-        >
-          <option value="">Sélectionnez une sous-catégorie</option>
-          {filteredSubCategories.map(subCategory => (
-            <option key={subCategory.id} value={subCategory.name}>{subCategory.name}</option>
-          ))}
-        </select>
-      </div>
+          <div className="mb-6 relative">
+            <label htmlFor="subCategory" className="block text-gray-700 text-sm font-bold mb-2">Sous-catégorie:</label>
+            <select
+              id="subCategory"
+              value={selectedCategory}
+              disabled={!selectedCategory}
+              className="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all duration-300"
+            >
+              <option value="">Sélectionnez une sous-catégorie</option>
+              {filteredSubCategories.map(subCategory => (
+                <option key={subCategory.id} value={subCategory.name}>{subCategory.name}</option>
+              ))}
+            </select>
+          </div>
           <div className="mb-6 relative">
             <label
               htmlFor="description"
@@ -158,7 +158,7 @@ export default function AddAnnonceUI(
             >
               Description
             </label>
-            <div className="flex items-start"> 
+            <div className="flex items-start">
               <textarea
                 id="description"
                 value={description}
@@ -177,7 +177,7 @@ export default function AddAnnonceUI(
             >
               Prix par jour (€)
             </label>
-            <div className="flex items-center"> 
+            <div className="flex items-center">
               <input
                 type="number"
                 id="prix"
@@ -188,7 +188,7 @@ export default function AddAnnonceUI(
               />
             </div>
           </div>
-         
+
           <div className="flex items-center justify-center">
             <button
               type="submit"

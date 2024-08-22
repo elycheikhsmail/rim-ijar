@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import { Category, AnnonceType, SubCategory, categories, subCategories } from './data';
 import { useRouter } from "next/navigation";
 import ClipLoader from "react-spinners/ClipLoader";
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
 type AddAnnonceActionType = (
   formData: FormData,
@@ -18,6 +21,12 @@ import 'leaflet/dist/leaflet.css';
 type AddAnnonceActionType = (
   formData: FormData,
 ) => Promise<{ success?: boolean; message?: string; error?: string }>;
+
+import dynamic from 'next/dynamic';
+
+const MapWithNoSSR = dynamic(() => import('./MapComponent'), {
+  ssr: false,
+});
 
 function AddAnnonceUI(
   { addAnnonceAction }: { addAnnonceAction: AddAnnonceActionType }
@@ -59,8 +68,16 @@ function AddAnnonceUI(
     });
 
     return selectedLocation ? (
-      <Marker position={[selectedLocation.lat, selectedLocation.lng]}>
-      </Marker>
+      <Marker 
+        position={[selectedLocation.lat, selectedLocation.lng]}
+        icon={L.icon({
+          iconUrl: '/images/marker-icon.png',
+          iconRetinaUrl: '/images/marker-icon-2x.png',
+          shadowUrl: '/images/marker-shadow.png',
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+        })}
+      />
     ) : null;
   };
 
@@ -124,18 +141,7 @@ function AddAnnonceUI(
               Emplacement
             </label>
             <div className="h-64">
-              <MapContainer
-                center={[18.0742, -15.9619]}
-                zoom={13}
-                scrollWheelZoom={false}
-                className="h-full"
-              >
-                <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <LocationPicker />
-              </MapContainer>
+              <MapWithNoSSR selectedLocation={selectedLocation} setSelectedLocation={setSelectedLocation} />
             </div>
           </div>
 

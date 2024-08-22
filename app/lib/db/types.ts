@@ -22,11 +22,7 @@ export enum AnnonceType {
     Autre = 'autre'
   }
   
-  interface TransactionTable {
-    id: Generated<number>
-    type: AnnonceType 
-    // autres colonnes...
-  }
+  
 // Description des tables pour Kysely
 export interface UserTable {
     id: Generated<number>;

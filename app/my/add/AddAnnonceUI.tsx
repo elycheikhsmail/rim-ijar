@@ -1,10 +1,8 @@
 "use client";
 import React, { useState } from "react";
-
-import { Category, AnnonceType, SubCategory, categories, subCategories } from './data';
-
-
+import { AnnonceType, Category, SubCategory, categories, subCategories } from './data';
 import { useRouter } from "next/navigation";
+//import { AnnonceType } from "@/app/lib/db";
 
 type AddAnnonceActionType = (
   formData: FormData,
@@ -18,9 +16,21 @@ export default function AddAnnonceUI(
   const router = useRouter();
 
   const [selectedType, setSelectedType] = useState<AnnonceType | ''>('');
+
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number>();
+
+  const [selectedSubCategory, setSelectedSubCategory] = useState<string>('');
+  const [selectedSubCategoryId, setSelectedSubCategoryId] = useState<number>();
+
   const [filteredCategories, setFilteredCategories] = useState<Category[]>([]);
   const [filteredSubCategories, setFilteredSubCategories] = useState<SubCategory[]>([]);
+
+  const [description, setDescription] = useState(
+    "maison jolie contenant 4 chambres",
+  );
+  const [price, setPrice] = useState("5000"); 
+  const [submitStatus, setSubmitStatus] = useState("");
 
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const type = e.target.value as AnnonceType;
@@ -35,25 +45,33 @@ export default function AddAnnonceUI(
     const category = categories.find(category => category.name === categoryName);
     if (category) {
       setFilteredSubCategories(subCategories.filter(sub => sub.categorie_id === category.id));
+      setSelectedCategoryId(category.id)
     }
+  };
+
+  const handleSubCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const subCategoryName = e.target.value; 
+
+    setSelectedSubCategory(subCategoryName);
+    const subCategory = subCategories.find(subcategory => subcategory.name === subCategoryName);
+    console.log({subCategory})
+    if (subCategory) { 
+      setSelectedSubCategoryId(subCategory.id)
+      console.log({selectedSubCategoryId})
+    }
+  
   };
 
 
 
-  const [description, setDescription] = useState(
-    "maison jolie contenant 4 chambres",
-  );
-  const [price, setPrice] = useState("5000");
-  const [categorie, setcategorie] = useState("");
-  const [submitStatus, setSubmitStatus] = useState("");
+
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-
-    const categorie_id = 1
+ 
     // Ici, vous ajouteriez la logique pour envoyer les données à votre API
-    console.log({ description, price, categorie, categorie_id });
+    console.log({ description, price, selectedType ,selectedCategory ,selectedCategoryId ,selectedSubCategory,selectedSubCategoryId});
     /*    
   image_url: z.string(),
   price: z.number(), // then number
@@ -61,12 +79,17 @@ export default function AddAnnonceUI(
     const formData = new FormData();
     formData.set("description", description);
     formData.set("price", `${price}`);
-    formData.set("categorie_id", `${categorie_id}`);
+
+
+    formData.set("type", `${selectedType}`);
+    formData.set("categorie_id", `${selectedCategoryId}`);
+    formData.set("sub_categorie_id", `${selectedSubCategoryId}`);
+
     formData.set("lieu_str", "noukachott");
     formData.set("image_url", "/images/maison.jpeg");
     // user_id sera recuper cote serveur
     console.log(formData.get("description"))
-    // soumetre le formulaire vers le serveur 
+    //soumetre le formulaire vers le serveur 
     addAnnonceAction(formData)
       .then((result) => {
         console.log("Résultat de l'action:", result);
@@ -137,12 +160,16 @@ export default function AddAnnonceUI(
             </select>
           </div>
 
+
           <div className="mb-6 relative">
             <label htmlFor="subCategory" className="block text-gray-700 text-sm font-bold mb-2">Sous-catégorie:</label>
             <select
               id="subCategory"
-              value={selectedCategory}
+
+              value={selectedSubCategory}
+              onChange={handleSubCategoryChange} 
               disabled={!selectedCategory}
+
               className="shadow-sm border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all duration-300"
             >
               <option value="">Sélectionnez une sous-catégorie</option>
@@ -151,6 +178,9 @@ export default function AddAnnonceUI(
               ))}
             </select>
           </div>
+
+
+
           <div className="mb-6 relative">
             <label
               htmlFor="description"

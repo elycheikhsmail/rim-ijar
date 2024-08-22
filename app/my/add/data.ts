@@ -1,11 +1,15 @@
 
 // Définition des types
+//import { AnnonceType } from "@/app/lib/db";
+
 export enum AnnonceType {
-    Vente = 'vente',
-    Location = 'location',
-    Service = 'service',
-    Autre = 'autre'
-  }
+  Vente = 'vente',
+  Location = 'location',
+  Service = 'service',
+  Autre = 'autre'
+}
+
+
   
  export interface Category {
     id: number;

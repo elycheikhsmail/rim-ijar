@@ -4,26 +4,7 @@ import { AnnonceType, Database} from "@/app/lib/db/index";
 
 
 
-export async function seed(db: Kysely<Database>): Promise<void> {
-  // seed code goes here...
-  // note: this function is mandatory. you must implement this function.
-  await db.insertInto("users").values([
-    {
-      email: "ely@gmail.com",
-      password: "1234er",
-    },
-
-    {
-      email: "sidi@gmail.com",
-      password: "1234er",
-    },
-
-    {
-      email: "ghalya@gmail.com",
-      password: "1234er",
-    },
-  ])
-    .executeTakeFirstOrThrow();
+export async function seed(db: Kysely<Database>): Promise<void> { 
     // categories principale
     await  db.insertInto("categories").values([
     //location

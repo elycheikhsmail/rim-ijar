@@ -24,7 +24,9 @@ export default async function addAnnonceAction(formData: FormData) {
 
 
   const validatedFields = annonceSchema.safeParse({
+    type: formData.get("type"),
     categorie_id: formData.get("categorie_id"),
+    sub_categorie_id: formData.get("sub_categorie_id"),
     //user_id: formData.get("user_id"),
     description: formData.get("description"),
     lieu_str: formData.get("lieu_str"),
@@ -40,6 +42,8 @@ export default async function addAnnonceAction(formData: FormData) {
 
   const {
     categorie_id,
+    type,
+    sub_categorie_id,
     description,
     lieu_str,
     image_url,
@@ -56,8 +60,8 @@ export default async function addAnnonceAction(formData: FormData) {
     await db.insertInto("annonces").values(
       {
         categorie_id,
-        type:AnnonceType.Location,
-        sub_categorie_id:1,
+        type,
+        sub_categorie_id,
         user_id,
         description,
         lieu_str,

@@ -1,6 +1,9 @@
 import { Kysely, sql } from "kysely";
 
 export async function up(db: Kysely<any>): Promise<void> {
+	// Créer le type ENUM
+	await sql`CREATE TYPE annonce_type AS ENUM ('vente', 'location', 'service', 'autre')`.execute(db)
+
 	await db.schema.dropTable("users").ifExists().execute();
 	await db.schema
 		.createTable("users")
@@ -32,9 +35,10 @@ export async function up(db: Kysely<any>): Promise<void> {
 		.createTable("categories")
 		.addColumn("id", "serial", (col) => col.primaryKey())
 		.addColumn("name", "varchar", (col) => col.notNull() )
-		.addColumn("is_vente", "boolean", (col) => col.notNull().defaultTo(false))
-		.addColumn("is_location", "boolean", (col) => col.notNull().defaultTo(false))
-		.addColumn("is_service", "boolean", (col) => col.notNull().defaultTo(false))
+		//
+		.addColumn('type', sql`annonce_type`, (col) => col.notNull()) 
+		//
+
 		.addColumn(
 			"created_at",
 			"timestamp",
@@ -57,6 +61,10 @@ export async function up(db: Kysely<any>): Promise<void> {
 	await db.schema
 		.createTable("annonces")
 		.addColumn("id", "serial", (col) => col.primaryKey()) 
+
+		//
+		.addColumn('type', sql`annonce_type`, (col) => col.notNull()) 
+		//
 		// categorie (principale)=type(vente/location/service) immobilier / auto/...
 		.addColumn("categorie_id", "integer", (col) => col.notNull()) 
 		//

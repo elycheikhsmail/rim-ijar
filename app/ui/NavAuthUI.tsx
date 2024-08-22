@@ -44,12 +44,15 @@ const NavAuthUI = () => {
         </Link>
         <Link
           href="/my/add"
+
+          id="addannonce"
           className="flex items-center hover:bg-blue-600 px-3 py-2 rounded transition duration-300"
         >
           <FaPlus className="mr-2" />
           Ajouter une annonce
         </Link>
         <button
+        id="deconnexion"
           onClick={handleLogout}
           className="flex items-center hover:bg-purple-500 px-3 py-2 rounded transition duration-300"
         >

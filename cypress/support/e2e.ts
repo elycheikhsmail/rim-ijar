@@ -18,3 +18,4 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+//require('../e2e/3-my-test/all.cy')

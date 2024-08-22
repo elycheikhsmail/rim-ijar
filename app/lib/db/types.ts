@@ -14,7 +14,19 @@ export interface Database {
     sub_categories: SubCategoryTable;
     annonces: AnnonceTable;
 }
-
+//
+export enum AnnonceType {
+    Vente = 'vente',
+    Location = 'location',
+    Service = 'service',
+    Autre = 'autre'
+  }
+  
+  interface TransactionTable {
+    id: Generated<number>
+    type: AnnonceType 
+    // autres colonnes...
+  }
 // Description des tables pour Kysely
 export interface UserTable {
     id: Generated<number>;
@@ -41,10 +53,8 @@ export type SessionUpdate = Updateable<SessionTable>;
 
 export interface CategoryTable {
     id: Generated<number>;
-    name: string;
-    is_vente: boolean;
-    is_location: boolean;
-    is_service: boolean;
+    type: AnnonceType ;
+    name: string; 
     created_at: ColumnType<Date, string | undefined, never>;
 }
 
@@ -65,6 +75,7 @@ export type SubCategoryUpdate = Updateable<SubCategoryTable>;
 
 export interface AnnonceTable {
     id: Generated<number>;
+    type: AnnonceType ;
     categorie_id: number;
     sub_categorie_id: number;
     options_object?: JSONColumnType<Record<string, any>>; // Ajustez selon la structure JSON spécifique

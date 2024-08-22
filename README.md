@@ -1,23 +1,9 @@
- pgLite pour le test et le dev
-bun install kysely-pglite
-bun install electric-sql/pglit
-bun install @electric-sql/pglite
+/add app/my/add/AddAnnonceUI.tsx
+
+stylise les option de selection :
+
+Type d'annonce: 
+catégorie:
+ sous-catégorie
  
- j'ai doit lance 
-
- ```shell
- npm run migrate:up 
- ```
-
- et
-
-```shell
-  npm run seed:run
-```
-
-  avant de lancer 
-
-
- ```shell
-  npx cyper open
-```
+ pour qu'il soit homogene avec le rest de la page

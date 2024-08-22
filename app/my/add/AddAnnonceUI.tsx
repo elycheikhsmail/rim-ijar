@@ -24,13 +24,7 @@ import 'leaflet/dist/leaflet.css';
 // type AddAnnonceActionType = (
 //   formData: FormData,
 // ) => Promise<{ success?: boolean; message?: string; error?: string }>;
-
-import dynamic from 'next/dynamic';
-
-const MapWithNoSSR = dynamic(() => import('./MapComponent'), {
-  ssr: false,
-});
-
+ 
 function AddAnnonceUI(
   { addAnnonceAction }: { addAnnonceAction: AddAnnonceActionType }
 ) {

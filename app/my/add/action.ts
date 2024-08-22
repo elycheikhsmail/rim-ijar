@@ -2,6 +2,7 @@
 import { db } from "@/app/lib/kysely";
 import { cookies } from "next/headers";
 import annonceSchema from "./zSchema";
+import { AnnonceType } from "@/app/lib/db";
 
 
 export default async function addAnnonceAction(formData: FormData) {
@@ -55,6 +56,7 @@ export default async function addAnnonceAction(formData: FormData) {
     await db.insertInto("annonces").values(
       {
         categorie_id,
+        type:AnnonceType.Location,
         sub_categorie_id:1,
         user_id,
         description,

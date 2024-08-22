@@ -18,9 +18,27 @@ describe('test rim-ijar',
             cy.get('#password').type('1234abcd')
             // 
             cy.get('#confirmPassword').should('have.value', '') 
-            cy.get('#confirmPassword').type('1234abcd')
-            // submit
+            cy.get('#confirmPassword').type('1234abcd') 
             cy.get('#submit').click()
+            //logout  
+            cy.get('#deconnexion').click()
+            //login/connexion
+            cy.get('#email').type('ely@gmail.com')
+            cy.get('#password').type('1234abcd')
+            cy.get('#submit').click()
+
+            cy.get('a[href="/my/list"]').should('exist') 
+            // navigate to add page
+
+            cy.get('#addannonce').click() 
+            cy.get('a[href="/my/add"]').should('exist') 
+            //add annonce 
+            // id="description"
+            cy.get('#description').type('une belle voiture')
+            cy.get('#prix').type('5000')
+            cy.get('#categorie').select('Voiture');  
+            cy.get('#submit').click()
+
 
             
              

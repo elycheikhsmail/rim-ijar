@@ -23,6 +23,8 @@ export default function AddAnnonceUI(
 ) {
   const router = useRouter(); 
 
+  
+
   const [description, setDescription] = useState(
     "maison jolie contenant 4 chambres",
   );
@@ -198,6 +200,7 @@ export default function AddAnnonceUI(
           <div className="flex items-center justify-center">
             <button
               type="submit"
+              id="submit"
               className="bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 px-8 rounded focus:outline-none focus:shadow-outline transition-all duration-300"
             >
               Ajouter l'annonce

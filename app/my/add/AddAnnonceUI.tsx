@@ -12,6 +12,8 @@ import React, { useState } from "react";
 import { Category, AnnonceType, SubCategory, categories, subCategories } from './data';
 import { useRouter } from "next/navigation";
 import ClipLoader from "react-spinners/ClipLoader";
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 
 type AddAnnonceActionType = (
   formData: FormData,
@@ -31,6 +33,7 @@ function AddAnnonceUI(
   const [categorie, setcategorie] = useState("");
   const [submitStatus, setSubmitStatus] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
 
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const type = e.target.value as AnnonceType;

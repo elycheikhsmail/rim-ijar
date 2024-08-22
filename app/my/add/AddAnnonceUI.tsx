@@ -5,22 +5,22 @@ import { useRouter } from "next/navigation";
 import ClipLoader from "react-spinners/ClipLoader";
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
+//import L from 'leaflet';
 
 type AddAnnonceActionType = (
   formData: FormData,
 ) => Promise<{ success?: boolean; message?: string; error?: string }>;
 
-import React, { useState } from "react";
-import { Category, AnnonceType, SubCategory, categories, subCategories } from './data';
-import { useRouter } from "next/navigation";
-import ClipLoader from "react-spinners/ClipLoader";
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+// import React, { useState } from "react";
+// import { Category, AnnonceType, SubCategory, categories, subCategories } from './data';
+// import { useRouter } from "next/navigation";
+// import ClipLoader from "react-spinners/ClipLoader";
+// import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-type AddAnnonceActionType = (
-  formData: FormData,
-) => Promise<{ success?: boolean; message?: string; error?: string }>;
+// type AddAnnonceActionType = (
+//   formData: FormData,
+// ) => Promise<{ success?: boolean; message?: string; error?: string }>;
 
 import dynamic from 'next/dynamic';
 

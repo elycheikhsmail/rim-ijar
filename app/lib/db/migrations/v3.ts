@@ -28,7 +28,7 @@ export async function up(db: Kysely<any>): Promise<void> {
 			"timestamp",
 			(col) => col.defaultTo(sql`now()`).notNull(),
 		)
-		.addForeignKeyConstraint("fk_user_id", ["user_id"], "users", ["id"])
+		//.addForeignKeyConstraint("fk_user_id", ["user_id"], "users", ["id"])
 		.execute();
 
 	await db.schema // categorie (principale) immobilier / auto/...
@@ -87,8 +87,8 @@ export async function up(db: Kysely<any>): Promise<void> {
 			"timestamp",
 			(col) => col.defaultTo(sql`now()`).notNull(),
 		)
-		.addForeignKeyConstraint("fk_categorie_id", ["categorie_id"], "categories", ["id"])
-		.addForeignKeyConstraint("fk_user_id", ["user_id"], "users", ["id"])
+		//.addForeignKeyConstraint("fk_categorie_id", ["categorie_id"], "categories", ["id"])
+		//.addForeignKeyConstraint("fk_user_id", ["user_id"], "users", ["id"])
 		.execute();
 }
 

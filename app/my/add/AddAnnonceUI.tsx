@@ -26,10 +26,8 @@ export default function AddAnnonceUI(
   const [filteredCategories, setFilteredCategories] = useState<Category[]>([]);
   const [filteredSubCategories, setFilteredSubCategories] = useState<SubCategory[]>([]);
 
-  const [description, setDescription] = useState(
-    "maison jolie contenant 4 chambres",
-  );
-  const [price, setPrice] = useState("5000"); 
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(""); 
   const [submitStatus, setSubmitStatus] = useState("");
 
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

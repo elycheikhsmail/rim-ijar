@@ -1,171 +1,118 @@
 import type { Kysely } from "kysely";
-import { AnnonceType, Database } from "@/app/lib/db/index";
-//import { DatabaseInterfaces } from "../types-v1";
+import { Database, NewCommunAnnonce, NewLocationAnnonce, AnnonceType } from "@/app/lib/db/index";
+import { mycategories } from "./data-v2/v2/categories"
+import {
+    subCategorieServices,
+    subCategorieVenteVehicule,
+    subCategorielocationVehicule,
+    subCategoriesVenteImmobilier,
+    subcategorieLocationImmobilier
 
+} from "./data-v2/v2/sub-categories";
+
+// location 
+import locationList from "./data/location/list.json"
+import location_subcategorie_1 from "./data/location/1/list.json"
+import location_subcategorie_2 from "./data/location/2/list.json"
+// vente
+import venteList from "./data/vente/list.json"
+import vente_subcategorie_1 from "./data/vente/1/list.json"
+import vente_subcategorie_2 from "./data/vente/2/list.json"
 
 
 export async function seed(db: Kysely<Database>): Promise<void> {
+    // new categorie version
+    // location categorie
+    await db.insertInto("location_categorie")
+        .values(locationList.map((category) => ({
+            name: category
+        }))).executeTakeFirstOrThrow()
+    //
+    await db.insertInto("location_sub_categorie")
+        .values(location_subcategorie_1.map((category) => ({
+            location_categorie_id: 1,
+            name: category
+        }))).executeTakeFirstOrThrow()
+    //
+    await db.insertInto("location_sub_categorie")
+        .values(location_subcategorie_2.map((category) => ({
+            location_categorie_id: 2,
+            name: category
+        }))).execute()
+    // vente categorie
+    await db.insertInto("vente_categorie")
+        .values(venteList.map((category) => ({
+            name: category
+        }))).executeTakeFirstOrThrow()
+    //
+    await db.insertInto("vente_sub_categorie")
+        .values(vente_subcategorie_1.map((category) => ({
+            vente_categorie_id: 1,
+            name: category
+        }))).executeTakeFirstOrThrow()
+    //
+    await db.insertInto("vente_sub_categorie")
+        .values(vente_subcategorie_2.map((category) => ({
+            vente_categorie_id: 2,
+            name: category
+        }))).execute()
+    // annonce
+    const myLocationAnnonce: NewLocationAnnonce = {
+        "categorie_id": 1, // 1 = 0+1
+        "categorie_name": locationList[0], // 0 = 1-1
+        //"vente",
+        "sub_categorie_id": 1,
+        "sub_categorie_name": location_subcategorie_1[0],
+        //"",
+
+        "description": "test",
+        "lieu_name": "noukchott/teyarette",
+        "price": 5000,
+    }
+    // les deux insertions doive se realise en ensemble ou echoue
+    await db.insertInto("location_annonces").values(myLocationAnnonce).executeTakeFirstOrThrow()
+    const locationAnnonceInDB = await db.selectFrom("location_annonces")
+        .selectAll()
+        .executeTakeFirstOrThrow()
+    console.log("locationAnnonceInDB")
+    console.log(locationAnnonceInDB)
+
+
+    const myCommunAnonce: NewCommunAnnonce = {
+        "annonce_type": AnnonceType.Location,
+        "categorie_name": locationAnnonceInDB.categorie_name,
+        "description": locationAnnonceInDB.description,
+        "lieu_name": locationAnnonceInDB.lieu_name,
+        "price": locationAnnonceInDB.price,
+        "subCategorie_name": myLocationAnnonce.sub_categorie_name,
+        "parent_id": locationAnnonceInDB.id
+
+    }
+
+    await db.insertInto("commun_annonces")
+        .values(myCommunAnonce)
+        .executeTakeFirstOrThrow()
+
+
+    //
     // categories principale
-
-    await db.insertInto("categories").values([
-        //location
-        { "name": "immobilier", type: AnnonceType.Location }, //1
-        { "name": "véhicule", type: AnnonceType.Location },//1
-        // vente
-        { "name": "immobilier", type: AnnonceType.Vente },//3
-        { "name": "véhicule", type: AnnonceType.Vente },//4
-        // services
-        { "name": "électricité", type: AnnonceType.Service } //5
-
-    ])
-        .executeTakeFirstOrThrow()
+    await db.insertInto("categories").values(mycategories).executeTakeFirstOrThrow()
     // vente imoobilier
-    await db.insertInto("sub_categories")
-        .values(
-            [
-                {
-                    "name": "maison",
-                    "categorie_id": 1
-                },
-                {
-                    "name": "appartement",
-                    "categorie_id": 1
-                },
-                {
-                    "name": "bureau/commerce",
-                    "categorie_id": 1
-                },
-                {
-                    "name": "terrain",
-                    "categorie_id": 1
-                },
-                {
-                    "name": "autre",
-                    "categorie_id": 1
-                }
-            ]
-
-        )
-        .executeTakeFirstOrThrow()
+    await db.insertInto("sub_categories").values(subCategoriesVenteImmobilier).executeTakeFirstOrThrow()
     // vente vehicule
-    await db.insertInto("sub_categories").values(
-        [
-            {
-                "name": "voiture",
-                "categorie_id": 2
-            },
-            {
-                "name": "moto",
-                "categorie_id": 2
-            },
-            {
-                "name": "bus,camion,caravanne",
-                "categorie_id": 2
-            },
-            {
-                "name": "Engins de construction et agricoles",
-                "categorie_id": 2
-            },
-            {
-                "name": "scooter",
-                "categorie_id": 2
-            },
-            {
-                "name": "autre",
-                "categorie_id": 2
-            }
-        ]
-    )
-        .executeTakeFirstOrThrow()
+    await db.insertInto("sub_categories").values(subCategorieVenteVehicule).executeTakeFirstOrThrow()
     // location immobillier
-    await db.insertInto("sub_categories")
-        .values(
-            [
-                {
-                    "name": "maison",
-                    "categorie_id": 3
-                },
-                {
-                    "name": "appartement",
-                    "categorie_id": 3
-                },
-                {
-                    "name": "bureau/commerce",
-                    "categorie_id": 3
-                },
-                {
-                    "name": "terrain",
-                    "categorie_id": 3
-                },
-                {
-                    "name": "autre",
-                    "categorie_id": 3
-                }
-            ])
-        .executeTakeFirstOrThrow()
+    await db.insertInto("sub_categories").values(subcategorieLocationImmobilier).executeTakeFirstOrThrow()
     // location vehicule
-    await db.insertInto("sub_categories").values(
-        [
-            {
-                "name": "voiture",
-                "categorie_id": 4
-            },
-            {
-                "name": "moto",
-                "categorie_id": 4
-            },
-            {
-                "name": "bus,camion,caravanne",
-                "categorie_id": 4
-            },
-            {
-                "name": "Engins de construction et agricoles",
-                "categorie_id": 4
-            },
-            {
-                "name": "scooter",
-                "categorie_id": 4
-            },
-            {
-                "name": "autre",
-                "categorie_id": 4
-            }
-        ]
-    )
-        .executeTakeFirstOrThrow()
+    await db.insertInto("sub_categories").values(subCategorielocationVehicule).executeTakeFirstOrThrow()
     // services 
-    await db.insertInto("sub_categories").values(
-        [
-            {
-                "name": "electricite",
-                "categorie_id": 5
-            },
-            {
-                "name": "plomberie",
-                "categorie_id": 5
-            },
-            {
-                "name": "enseignant",
-                "categorie_id": 2
-            },
-            {
-                "name": "autre",
-                "categorie_id": 2
-            },
+    await db.insertInto("sub_categories").values(subCategorieServices).executeTakeFirstOrThrow()
+    //  
 
-        ]
-    )
-        .executeTakeFirstOrThrow()
+    //
 
-    const categories = await db.selectFrom("categories").selectAll().executeTakeFirstOrThrow()
-    console.log("categories"); console.log(categories)
-
-    const subcategories = await db.selectFrom("sub_categories").selectAll().executeTakeFirstOrThrow()
-    console.log("sub_categories"); console.log(subcategories)
-
-
-
-
+    const d = await db.selectFrom("commun_annonces").selectAll().executeTakeFirstOrThrow()
+    console.log(d)
 
 
 

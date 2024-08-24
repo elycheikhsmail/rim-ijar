@@ -10,11 +10,11 @@ gnome-terminal --tab -- bash -c "npm run test:seed:run; exec bash"
 sleep 0.5
 
 # Lance le troisième script dans un nouvel onglet
-gnome-terminal --tab -- bash -c "npm run dev; exec bash"
-sleep 0.5
+# gnome-terminal --tab -- bash -c "npm run dev; exec bash"
+# sleep 0.5
 
-# Lance le quaterieme script dans un nouvel onglet
-gnome-terminal --tab -- bash -c "npm run e2e; exec bash"
+# # Lance le quaterieme script dans un nouvel onglet
+# gnome-terminal --tab -- bash -c "npm run e2e; exec bash"
 
 
  
